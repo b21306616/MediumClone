@@ -1,4 +1,8 @@
 <?php
+/*
+What is this file?
+This file defines the default blueprint (fallback values) for all User fields.
+*/
 
 namespace Database\Factories;
 
