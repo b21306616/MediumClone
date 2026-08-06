@@ -10,7 +10,6 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 
-
 // The following code returns application configuration with routing with middlewares with exceptions
 // and then calls create() (creates the application instance).
 return Application::configure(basePath: dirname(__DIR__))
