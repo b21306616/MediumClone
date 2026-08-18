@@ -10,16 +10,11 @@
     "guidelines": true,
     "mcp": true,
     "nightwatch": false,
-    "packages": [
-        "livewire/blaze"
-    ],
     "sail": false,
     "skills": [
         "infer-conventions",
         "laravel-best-practices",
-        "livewire-development",
         "pest-testing",
-        "tailwindcss-development",
-        "blaze-optimize"
+        "tailwindcss-development"
     ]
 }
