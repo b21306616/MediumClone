@@ -1,5 +1,15 @@
 <?php
 
+/*
+index.php is the entry script.
+Everything starts from index.php.
+Whenever you visit your website, index.php is the first file that is executed.
+
+It does all autoloading the composer packages.
+It is going to import the bootstrap/app.php which actually creates the app
+and then on that app it calls the handle request through the request capture.
+*/
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 

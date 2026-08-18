@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        /*
+        NOTE: The UserFactory.php file defines the default blueprint (fallback values) for all user fields.
+        The array passed into create([...]) below only overrides specific keys you care about, while keeping all other default fields intact.
+        */
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',

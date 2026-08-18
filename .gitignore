@@ -6,7 +6,8 @@
 /public/storage
 /storage/*.key
 /storage/pail
-/vendor
+/vendor/*
+!/vendor/what is vendor folder.md
 .env
 .env.backup
 .env.production

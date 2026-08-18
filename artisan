@@ -1,6 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+#                                                          WHAT IS THIS FILE?
+#                                                          ------------------
+# This file is the main entry point for all Artisan commands. It is a simple wrapper around the
+# Laravel framework that bootstraps the application and passes control to the Artisan console kernel.
+#---------------------------------------------------------------------------------------
+# TO SUMMARIZE, this file is the main command line interface we are going to use in our project
+#---------------------------------------------------------------------------------------
+
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -16,3 +24,8 @@ $app = require_once __DIR__.'/bootstrap/app.php';
 $status = $app->handleCommand(new ArgvInput);
 
 exit($status);
+
+
+#!/usr/bin/env php
+<?php
+
