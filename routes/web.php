@@ -46,6 +46,7 @@ Route::get('/hello', function () {
 
     // Option 3:
     $name = 'Begench';
+
     return view('hello', compact('name'));
 });
 

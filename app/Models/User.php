@@ -25,6 +25,9 @@ use Illuminate\Support\Str;
  */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
+
+// 'implements MustVerifyEmail' means that the User model must implement the MustVerifyEmail interface,
+// which requires users to verify their email address before they can log in or perform certain actions.
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
