@@ -1,16 +1,43 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+//================================================================================================================================================================
+//                                                          Render the dashboard view using closure function
 
+/*
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard'); // Renders the dashboard view located in resources/views/dashboard.blade.php
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
+//================================================================================================================================================================
+//                                                          Render the dashboard view using controller method
 
+// get('/dashboard', [PostController::class, 'index'])
+// The above line means, when a GET request is made to the /dashboard URL, the index method of the PostController will be executed.
+
+// middleware(['auth', 'verified'])
+// The above line means, the dashboard route is protected by the auth and verified middleware.
+
+// 'auth': Checks if the user is logged in. If they are a guest (not authenticated), Laravel redirects them to the /login page.
+// 'verified': Checks if the user has confirmed/verified their email address. If they haven't, Laravel redirects them to the email verification notice page.
+// IF ANY MIDDLEWARE CHECK FAILS, EXECUTION STOPS IMMEDIATELY AND THE CONTROLLER METHOD IS NEVER CALLED.
+
+// name('dashboard')
+// The above line gives this route a unique nickname (dashboard) that you can refer to across your application.
+// Instead of hardcoding URLs (like href="/dashboard"), you use Laravel's route() helper.
+
+// For example:
+// In a Blade template, you can use: <a href="{{ route('dashboard') }}">Dashboard</a>
+// In a controller, you can use: return redirect()->route('dashboard');
+
+Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+//================================================================================================================================================================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
