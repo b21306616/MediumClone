@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//================================================================================================================================================================
+// ================================================================================================================================================================
 //                                                          Render the dashboard view using closure function
 
 /*
@@ -15,7 +15,7 @@ Route::get('/dashboard', function () {
     return view('dashboard'); // Renders the dashboard view located in resources/views/dashboard.blade.php
 })->middleware(['auth', 'verified'])->name('dashboard');
 */
-//================================================================================================================================================================
+// ================================================================================================================================================================
 //                                                          Render the dashboard view using controller method
 
 // get('/dashboard', [PostController::class, 'index'])
@@ -37,7 +37,7 @@ Route::get('/dashboard', function () {
 // In a controller, you can use: return redirect()->route('dashboard');
 
 Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-//================================================================================================================================================================
+// ================================================================================================================================================================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
