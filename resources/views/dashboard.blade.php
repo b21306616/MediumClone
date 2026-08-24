@@ -54,23 +54,72 @@
                                 <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('All Stories') }}</h3>
                                     <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('Showing all articles across all categories.') }}</p>
-                                    @forelse ($posts as $post)
-                                        <div class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs">
-                                            <a href="#">
-                                                <img class="rounded-base" src="/docs/images/blog/image-1.jpg" alt="" />
-                                            </a>
-                                            <a href="#">
-                                                <h5 class="mt-6 mb-2 text-2xl font-semibold tracking-tight text-heading">Streamlining your design process today.</h5>
-                                            </a>
-                                            <p class="mb-6 text-body">In today’s fast-paced digital landscape, fostering seamless collaboration among Developers and IT Operations.</p>
-                                            <a href="#" class="inline-flex items-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                                                Read more
-                                                <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/></svg>
-                                            </a>
-                                        </div>
-                                    @empty
 
-                                    @endforelse
+                                    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                                        @forelse ($posts as $post)
+                                            @php($displayDate = $post->published_at ?? $post->created_at)
+
+                                            <article
+                                                class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-gray-700 dark:bg-gray-800"
+                                                data-testid="post-card-{{ $post->id }}">
+                                                <div class="aspect-video overflow-hidden bg-gray-100 dark:bg-gray-700" x-data="{ imageFailed: false }">
+                                                    @if ($post->image)
+                                                        <img
+                                                            x-show="!imageFailed"
+                                                            x-on:error="imageFailed = true"
+                                                            class="h-full w-full object-cover"
+                                                            src="{{ $post->image }}"
+                                                            alt="{{ $post->title }}"
+                                                            loading="lazy">
+
+                                                        <div
+                                                            x-show="imageFailed"
+                                                            class="flex h-full w-full flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500"
+                                                            style="display: none;"
+                                                            data-testid="post-image-fallback-{{ $post->id }}">
+                                                            <svg class="h-10 w-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3 16 4-4 4 4 4-4 6 6M14 8h.01M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z" />
+                                                            </svg>
+                                                            <span class="text-sm font-medium">{{ __('Image unavailable') }}</span>
+                                                        </div>
+                                                    @else
+                                                        <div
+                                                            class="flex h-full w-full flex-col items-center justify-center gap-2 text-gray-400 dark:text-gray-500"
+                                                            data-testid="post-image-fallback-{{ $post->id }}">
+                                                            <svg class="h-10 w-10" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3 16 4-4 4 4 4-4 6 6M14 8h.01M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2Z" />
+                                                            </svg>
+                                                            <span class="text-sm font-medium">{{ __('No image available') }}</span>
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="flex flex-1 flex-col gap-4 p-5">
+                                                    <div class="flex flex-wrap items-center justify-between gap-2">
+                                                        <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">
+                                                            {{ $post->category->name }}
+                                                        </span>
+                                                        <time class="text-xs text-gray-500 dark:text-gray-400" datetime="{{ $displayDate->toDateString() }}">
+                                                            {{ $displayDate->format('M j, Y') }}
+                                                        </time>
+                                                    </div>
+
+                                                    <h4 class="line-clamp-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+                                                        {{ $post->title }}
+                                                    </h4>
+
+                                                    <p class="line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                                                        {{ Illuminate\Support\Str::limit(strip_tags($post->content), 160) }}
+                                                    </p>
+                                                </div>
+                                            </article>
+                                        @empty
+                                            <div class="col-span-full rounded-xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-800">
+                                                <h4 class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ __('No stories yet') }}</h4>
+                                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">{{ __('New articles will appear here when they are available.') }}</p>
+                                            </div>
+                                        @endforelse
+                                    </div>
                                 </div>
                             </div>
 

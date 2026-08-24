@@ -14,8 +14,23 @@ class PostController extends Controller
      */
     public function index(): View
     {
-        $categories = Category::get(); // Fetch all categories from the database
-        $posts = Post::orderBy('created_at', 'desc')->get(); // Fetch all posts from the database and order them by creation date in descending order
+        // $categories = Category::get(); // Fetch all categories from the database
+        // $posts = Post::orderBy('created_at', 'desc')->get(); // Fetch all posts from the database and order them by creation date in descending order
+
+        $categories = Category::query()->get(['id', 'name']);
+        $posts = Post::query()
+            ->select([
+                'id',
+                'category_id',
+                'title',
+                'content',
+                'image',
+                'published_at',
+                'created_at',
+            ])
+            ->with('category:id,name')
+            ->latest()
+            ->get();
 
         // ============================================================================================================================
         //                                  Pass the data to the dashboard view using the compact function.
